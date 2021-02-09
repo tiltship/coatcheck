@@ -11,6 +11,7 @@ import (
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type SignupRequest struct {
@@ -95,6 +96,7 @@ func main() {
 	server := &Server{pool}
 
 	e := echo.New()
+	e.Use(middleware.CORS())
 	e.POST("/signups", server.CreateSignup)
 	e.GET("/health", server.Health)
 
